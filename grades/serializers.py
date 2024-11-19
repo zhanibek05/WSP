@@ -1,11 +1,11 @@
+# grades/serializers.py
+
 from rest_framework import serializers
 from .models import Grade
-from students.serializers import StudentSerializer
-from courses.serializers import CourseSerializer
 
 class GradeSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(read_only=True)
-    course = CourseSerializer(read_only=True)
+    student = serializers.StringRelatedField()
+    course = serializers.StringRelatedField()
     teacher = serializers.StringRelatedField()
 
     class Meta:

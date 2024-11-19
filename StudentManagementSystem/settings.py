@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_swagger',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
+    'django_filters',
     
     
     'rest_framework',
@@ -140,15 +144,44 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# StudentManagementSystem/settings.py
+
 REST_FRAMEWORK = {
+    # ... existing settings
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    # Optionally, add pagination and filter backends if used
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 }
 
+# drf-spectacular settings (optional customization)
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Student Management System API',
+    'DESCRIPTION': 'API documentation for the Student Management System built with Django REST Framework.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SECURITY': [
+        {
+            'Bearer': []
+        },
+    ],
+    'SECURITY_SCHEMES': {
+        'Bearer': {
+            'type': 'http',
+            'scheme': 'bearer',
+            'bearerFormat': 'JWT',
+        },
+    },
+}
+DEBUG = True 
 
 DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
