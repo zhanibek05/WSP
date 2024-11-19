@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -182,6 +183,62 @@ SPECTACULAR_SETTINGS = {
     },
 }
 DEBUG = True 
+
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {name} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file_grades': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'grades.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'file_attendance': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'attendance.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'file_courses': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'courses.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'file_students': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'students.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+        'file_users': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'users.log'),
+            'formatter': 'verbose',
+            'encoding': 'utf-8',
+        },
+    },
+    'loggers': {
+        'grades': {'handlers': ['file_grades'], 'level': 'INFO', 'propagate': False},
+        'attendance': {'handlers': ['file_attendance'], 'level': 'INFO', 'propagate': False},
+        'courses': {'handlers': ['file_courses'], 'level': 'INFO', 'propagate': False},
+        'students': {'handlers': ['file_students'], 'level': 'INFO', 'propagate': False},
+        'users': {'handlers': ['file_users'], 'level': 'INFO', 'propagate': False},
+    },
+}
 
 DJOSER = {
     'USER_CREATE_PASSWORD_RETYPE': True,
